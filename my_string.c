@@ -14,21 +14,35 @@ struct my_string {
 
 typedef struct my_string my_string_s;
 
-MY_STRING my_string_init_default(void) {
-    my_string_s*  my_string = (my_string_s*)malloc(sizeof(my_string_s));
-    if (my_string == NULL) {
-        printf("Failed to allocate memory");
-        exit(1);
-    }
-    my_string->cap = 7;
-    my_string->size_t = 0;
-    my_string->str = (char*)malloc(sizeof(char) * my_string->cap);
+//MY_STRING my_string_init_default(void) {
+//    my_string_s*  my_string = (my_string_s*)malloc(sizeof(my_string_s));
+//    if (my_string == NULL) {
+//        printf("Failed to allocate memory");
+//        exit(1);
+//    }
+//    my_string->cap = 7;
+//    my_string->size_t = 0;
+//    my_string->str = (char*)malloc(sizeof(char) * my_string->cap);
+//
+//    if (my_string->str == NULL) {
+//        printf("Failed to allocate memory");
+//        return NULL;
+//    }
+//    return my_string;
+//}
 
-    if (my_string->str == NULL) {
-        printf("Failed to allocate memory");
-        return NULL;
+MY_STRING my_string_init_default(void) {
+    my_string_s* p_string = (my_string_s*) malloc(sizeof(my_string_s ));
+    if (p_string != NULL){
+        p_string->cap = 7;
+        p_string->size_t = 0;
+        p_string->str = (char*)malloc(sizeof(char)* p_string->cap);
+        if (p_string->str == NULL) {
+            free(p_string);
+            return NULL;
+        }
     }
-    return my_string;
+    return p_string;
 }
 
 void my_string_destroy(MY_STRING* phMy_string) {
@@ -78,12 +92,20 @@ MY_STRING my_string_init_c_string(const char* c_string) {
 
 int my_string_get_capacity(MY_STRING hMy_string) {
     my_string_s* myString = (my_string_s*)hMy_string;
+    if (myString == NULL) {
+        printf("Invalid string\n");
+        return -1;
+    }
     size_t cap = myString->cap;
     return (int)cap;
 }
 
 int my_string_get_size(MY_STRING hMy_string) {
     my_string_s* myString = (my_string_s*)hMy_string;
+    if (myString == NULL) {
+        printf("Invalid string\n");
+        return -1;
+    }
     size_t size = myString->size_t;
     return (int)size;
 }
@@ -116,6 +138,30 @@ int my_string_compare(MY_STRING hLeft_string, MY_STRING hRight_string) {
 
 
     return 0;
+}
+
+Status my_string_extraction(MY_STRING hMy_string, FILE* fp) {
+    my_string_s* new_string = (my_string_s*)hMy_string;
+    if (new_string == NULL || fp == NULL) {
+        return FAILURE;
+    }
+    new_string->size_t = 0;
+
+    int ch;
+    while ((ch = fgetc(fp)) != EOF) {
+        if (ch != ' ' && ch != '\t' && ch != '\n') {
+            break;
+        }
+
+    }
+
+
+    return FAILURE;
+}
+
+Status my_string_insertion(MY_STRING hMy_string, FILE* fp) {
+
+    return FAILURE;
 }
 
 

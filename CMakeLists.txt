@@ -5,4 +5,5 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(my_string main.c
         my_string.h
-        my_string.c)
+        my_string.c
+        status.h)

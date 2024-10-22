@@ -43,8 +43,12 @@ int main(int argc, char* argv[]) {
     apple = my_string_init_c_string("apple");
     assert(my_string_compare(app,apple) == -1);
 
+    printf("%d\n", my_string_get_size(apple));
 
-    my_string_destroy(&hMy_string);
+
+    my_string_destroy(&apple);
+
+    printf("%d", my_string_get_size(apple));
 
 
     return 0;
